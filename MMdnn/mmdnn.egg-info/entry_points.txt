@@ -1,0 +1,8 @@
+[console_scripts]
+mmconvert = mmdnn.conversion._script.convert:_main
+mmdownload = mmdnn.conversion._script.extractModel:_main
+mmtocode = mmdnn.conversion._script.IRToCode:_main
+mmtoir = mmdnn.conversion._script.convertToIR:_main
+mmtomodel = mmdnn.conversion._script.dump_code:_main
+mmvismeta = mmdnn.conversion.examples.tensorflow.vis_meta:_main
+

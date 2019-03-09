@@ -1,0 +1,9273 @@
+node {
+  name: "input"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        dim {
+          size: -1
+        }
+        dim {
+          size: 608
+        }
+        dim {
+          size: 608
+        }
+        dim {
+          size: 3
+        }
+      }
+    }
+  }
+}
+node {
+  name: "train_flag"
+  op: "Placeholder"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_BOOL
+    }
+  }
+  attr {
+    key: "shape"
+    value {
+      shape {
+        unknown_rank: true
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/conv_0_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/conv_0_conv_weights/read"
+  op: "Identity"
+  input: "conv_0/conv_0_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/conv_0_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/Conv2D"
+  op: "Conv2D"
+  input: "input"
+  input: "conv_0/conv_0_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_0/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/biases/read"
+  op: "Identity"
+  input: "conv_0/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/Add"
+  op: "Add"
+  input: "conv_0/Conv2D"
+  input: "conv_0/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_0/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_0/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 32
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_0/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_0/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_0/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_0/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_0/BatchNorm/cond/Const"
+  input: "conv_0/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_0/Add"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_0/BatchNorm/Const"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_0/BatchNorm/beta/read"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_0/Add"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_0/BatchNorm/Const"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_0/BatchNorm/beta/read"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_0/BatchNorm/moving_mean/read"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_0/BatchNorm/moving_variance/read"
+  input: "conv_0/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_0/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_0/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_0/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_0/Relu"
+  op: "Relu"
+  input: "conv_0/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "maxpool1"
+  op: "MaxPool"
+  input: "conv_0/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/conv_2_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 32
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/conv_2_conv_weights/read"
+  op: "Identity"
+  input: "conv_2/conv_2_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/conv_2_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/Conv2D"
+  op: "Conv2D"
+  input: "maxpool1"
+  input: "conv_2/conv_2_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_2/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/biases/read"
+  op: "Identity"
+  input: "conv_2/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/Add"
+  op: "Add"
+  input: "conv_2/Conv2D"
+  input: "conv_2/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_2/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_2/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_2/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_2/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_2/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_2/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_2/BatchNorm/cond/Const"
+  input: "conv_2/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_2/Add"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_2/BatchNorm/Const"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_2/BatchNorm/beta/read"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_2/Add"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_2/BatchNorm/Const"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_2/BatchNorm/beta/read"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_2/BatchNorm/moving_mean/read"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_2/BatchNorm/moving_variance/read"
+  input: "conv_2/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_2/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_2/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_2/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_2/Relu"
+  op: "Relu"
+  input: "conv_2/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "maxpool3"
+  op: "MaxPool"
+  input: "conv_2/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/conv_4_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/conv_4_conv_weights/read"
+  op: "Identity"
+  input: "conv_4/conv_4_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/conv_4_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/Conv2D"
+  op: "Conv2D"
+  input: "maxpool3"
+  input: "conv_4/conv_4_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_4/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/biases/read"
+  op: "Identity"
+  input: "conv_4/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/Add"
+  op: "Add"
+  input: "conv_4/Conv2D"
+  input: "conv_4/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_4/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_4/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_4/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_4/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_4/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_4/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_4/BatchNorm/cond/Const"
+  input: "conv_4/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_4/Add"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_4/BatchNorm/Const"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_4/BatchNorm/beta/read"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_4/Add"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_4/BatchNorm/Const"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_4/BatchNorm/beta/read"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_4/BatchNorm/moving_mean/read"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_4/BatchNorm/moving_variance/read"
+  input: "conv_4/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_4/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_4/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_4/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_4/Relu"
+  op: "Relu"
+  input: "conv_4/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "maxpool5"
+  op: "MaxPool"
+  input: "conv_4/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/conv_6_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/conv_6_conv_weights/read"
+  op: "Identity"
+  input: "conv_6/conv_6_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/conv_6_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/Conv2D"
+  op: "Conv2D"
+  input: "maxpool5"
+  input: "conv_6/conv_6_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_6/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/biases/read"
+  op: "Identity"
+  input: "conv_6/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/Add"
+  op: "Add"
+  input: "conv_6/Conv2D"
+  input: "conv_6/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_6/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_6/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_6/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_6/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_6/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_6/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_6/BatchNorm/cond/Const"
+  input: "conv_6/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_6/Add"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_6/BatchNorm/Const"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_6/BatchNorm/beta/read"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_6/Add"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_6/BatchNorm/Const"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_6/BatchNorm/beta/read"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_6/BatchNorm/moving_mean/read"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_6/BatchNorm/moving_variance/read"
+  input: "conv_6/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_6/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_6/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_6/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_6/Relu"
+  op: "Relu"
+  input: "conv_6/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "maxpool7"
+  op: "MaxPool"
+  input: "conv_6/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/conv_8_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/conv_8_conv_weights/read"
+  op: "Identity"
+  input: "conv_8/conv_8_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/conv_8_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/Conv2D"
+  op: "Conv2D"
+  input: "maxpool7"
+  input: "conv_8/conv_8_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_8/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/biases/read"
+  op: "Identity"
+  input: "conv_8/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/Add"
+  op: "Add"
+  input: "conv_8/Conv2D"
+  input: "conv_8/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_8/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_8/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_8/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_8/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_8/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_8/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_8/BatchNorm/cond/Const"
+  input: "conv_8/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_8/Add"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_8/BatchNorm/Const"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_8/BatchNorm/beta/read"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_8/Add"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_8/BatchNorm/Const"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_8/BatchNorm/beta/read"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_8/BatchNorm/moving_mean/read"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_8/BatchNorm/moving_variance/read"
+  input: "conv_8/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_8/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_8/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_8/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_8/Relu"
+  op: "Relu"
+  input: "conv_8/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "maxpool9"
+  op: "MaxPool"
+  input: "conv_8/Relu"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "ksize"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "VALID"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 2
+        i: 2
+        i: 1
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/conv_10_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/conv_10_conv_weights/read"
+  op: "Identity"
+  input: "conv_10/conv_10_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/conv_10_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/Conv2D"
+  op: "Conv2D"
+  input: "maxpool9"
+  input: "conv_10/conv_10_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_10/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/biases/read"
+  op: "Identity"
+  input: "conv_10/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/Add"
+  op: "Add"
+  input: "conv_10/Conv2D"
+  input: "conv_10/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_10/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_10/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_10/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_10/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_10/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_10/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_10/BatchNorm/cond/Const"
+  input: "conv_10/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_10/Add"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_10/BatchNorm/Const"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_10/BatchNorm/beta/read"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_10/Add"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_10/BatchNorm/Const"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_10/BatchNorm/beta/read"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_10/BatchNorm/moving_mean/read"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_10/BatchNorm/moving_variance/read"
+  input: "conv_10/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_10/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_10/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_10/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_10/Relu"
+  op: "Relu"
+  input: "conv_10/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_11/conv_11_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 128
+          }
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/conv_11_conv_weights/read"
+  op: "Identity"
+  input: "conv_11/conv_11_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/conv_11_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/Conv2D"
+  op: "Conv2D"
+  input: "conv_10/Relu"
+  input: "conv_11/conv_11_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_11/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/biases/read"
+  op: "Identity"
+  input: "conv_11/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/Add"
+  op: "Add"
+  input: "conv_11/Conv2D"
+  input: "conv_11/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_11/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_11/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_11/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_11/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_11/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_11/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_11/BatchNorm/cond/Const"
+  input: "conv_11/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_11/Add"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_11/BatchNorm/Const"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_11/BatchNorm/beta/read"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_11/Add"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_11/BatchNorm/Const"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_11/BatchNorm/beta/read"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_11/BatchNorm/moving_mean/read"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_11/BatchNorm/moving_variance/read"
+  input: "conv_11/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_11/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_11/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_11/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_11/Relu"
+  op: "Relu"
+  input: "conv_11/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_12/conv_12_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 128
+          }
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/conv_12_conv_weights/read"
+  op: "Identity"
+  input: "conv_12/conv_12_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/conv_12_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/Conv2D"
+  op: "Conv2D"
+  input: "conv_11/Relu"
+  input: "conv_12/conv_12_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_12/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/biases/read"
+  op: "Identity"
+  input: "conv_12/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/Add"
+  op: "Add"
+  input: "conv_12/Conv2D"
+  input: "conv_12/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_12/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_12/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_12/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_12/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_12/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_12/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_12/BatchNorm/cond/Const"
+  input: "conv_12/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_12/Add"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_12/BatchNorm/Const"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_12/BatchNorm/beta/read"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_12/Add"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_12/BatchNorm/Const"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_12/BatchNorm/beta/read"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_12/BatchNorm/moving_mean/read"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_12/BatchNorm/moving_variance/read"
+  input: "conv_12/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_12/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_12/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_12/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_12/Relu"
+  op: "Relu"
+  input: "conv_12/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_13/conv_13_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 128
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/conv_13_conv_weights/read"
+  op: "Identity"
+  input: "conv_13/conv_13_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/conv_13_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/Conv2D"
+  op: "Conv2D"
+  input: "conv_12/Relu"
+  input: "conv_13/conv_13_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_13/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/biases/read"
+  op: "Identity"
+  input: "conv_13/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/Add"
+  op: "Add"
+  input: "conv_13/Conv2D"
+  input: "conv_13/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_13/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_13/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_13/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_13/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_13/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_13/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_13/BatchNorm/cond/Const"
+  input: "conv_13/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_13/Add"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_13/BatchNorm/Const"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_13/BatchNorm/beta/read"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_13/Add"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_13/BatchNorm/Const"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_13/BatchNorm/beta/read"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_13/BatchNorm/moving_mean/read"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_13/BatchNorm/moving_variance/read"
+  input: "conv_13/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_13/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_13/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_13/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_13/Relu"
+  op: "Relu"
+  input: "conv_13/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_14/conv_14_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 18
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_14/conv_14_conv_weights/read"
+  op: "Identity"
+  input: "conv_14/conv_14_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_14/conv_14_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_14/Conv2D"
+  op: "Conv2D"
+  input: "conv_13/Relu"
+  input: "conv_14/conv_14_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_14/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 18
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_14/biases/read"
+  op: "Identity"
+  input: "conv_14/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_14/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_14/Add"
+  op: "Add"
+  input: "conv_14/Conv2D"
+  input: "conv_14/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_15/conv_15_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/conv_15_conv_weights/read"
+  op: "Identity"
+  input: "conv_15/conv_15_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/conv_15_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/Conv2D"
+  op: "Conv2D"
+  input: "conv_8/Relu"
+  input: "conv_15/conv_15_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_15/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/biases/read"
+  op: "Identity"
+  input: "conv_15/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/Add"
+  op: "Add"
+  input: "conv_15/Conv2D"
+  input: "conv_15/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_15/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_15/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_15/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_15/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_15/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_15/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_15/BatchNorm/cond/Const"
+  input: "conv_15/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_15/Add"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_15/BatchNorm/Const"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_15/BatchNorm/beta/read"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_15/Add"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_15/BatchNorm/Const"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_15/BatchNorm/beta/read"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_15/BatchNorm/moving_mean/read"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_15/BatchNorm/moving_variance/read"
+  input: "conv_15/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_15/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_15/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_15/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_15/Relu"
+  op: "Relu"
+  input: "conv_15/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_16/conv_16_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 128
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/conv_16_conv_weights/read"
+  op: "Identity"
+  input: "conv_16/conv_16_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/conv_16_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/Conv2D"
+  op: "Conv2D"
+  input: "conv_15/Relu"
+  input: "conv_16/conv_16_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_16/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/biases/read"
+  op: "Identity"
+  input: "conv_16/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/Add"
+  op: "Add"
+  input: "conv_16/Conv2D"
+  input: "conv_16/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_16/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_16/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_16/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_16/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_16/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_16/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_16/BatchNorm/cond/Const"
+  input: "conv_16/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_16/Add"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_16/BatchNorm/Const"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_16/BatchNorm/beta/read"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_16/Add"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_16/BatchNorm/Const"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_16/BatchNorm/beta/read"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_16/BatchNorm/moving_mean/read"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_16/BatchNorm/moving_variance/read"
+  input: "conv_16/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_16/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_16/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_16/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_16/Relu"
+  op: "Relu"
+  input: "conv_16/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_17/conv_17_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 18
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_17/conv_17_conv_weights/read"
+  op: "Identity"
+  input: "conv_17/conv_17_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_17/conv_17_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_17/Conv2D"
+  op: "Conv2D"
+  input: "conv_16/Relu"
+  input: "conv_17/conv_17_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_17/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 18
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_17/biases/read"
+  op: "Identity"
+  input: "conv_17/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_17/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_17/Add"
+  op: "Add"
+  input: "conv_17/Conv2D"
+  input: "conv_17/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_18/conv_18_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/conv_18_conv_weights/read"
+  op: "Identity"
+  input: "conv_18/conv_18_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/conv_18_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/Conv2D"
+  op: "Conv2D"
+  input: "conv_6/Relu"
+  input: "conv_18/conv_18_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_18/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/biases/read"
+  op: "Identity"
+  input: "conv_18/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/Add"
+  op: "Add"
+  input: "conv_18/Conv2D"
+  input: "conv_18/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_18/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_18/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 128
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_18/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_18/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_18/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_18/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_18/BatchNorm/cond/Const"
+  input: "conv_18/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_18/Add"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_18/BatchNorm/Const"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_18/BatchNorm/beta/read"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_18/Add"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_18/BatchNorm/Const"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_18/BatchNorm/beta/read"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_18/BatchNorm/moving_mean/read"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_18/BatchNorm/moving_variance/read"
+  input: "conv_18/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_18/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_18/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_18/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_18/Relu"
+  op: "Relu"
+  input: "conv_18/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_19/conv_19_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 128
+          }
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/conv_19_conv_weights/read"
+  op: "Identity"
+  input: "conv_19/conv_19_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/conv_19_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/Conv2D"
+  op: "Conv2D"
+  input: "conv_18/Relu"
+  input: "conv_19/conv_19_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_19/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/biases/read"
+  op: "Identity"
+  input: "conv_19/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/Add"
+  op: "Add"
+  input: "conv_19/Conv2D"
+  input: "conv_19/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/Const"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+        float_val: 1.0
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/beta"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/beta/read"
+  op: "Identity"
+  input: "conv_19/BatchNorm/beta"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/moving_mean"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/moving_mean/read"
+  op: "Identity"
+  input: "conv_19/BatchNorm/moving_mean"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/moving_variance"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 64
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/moving_variance/read"
+  op: "Identity"
+  input: "conv_19/BatchNorm/moving_variance"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/Switch"
+  op: "Switch"
+  input: "train_flag"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/switch_t"
+  op: "Identity"
+  input: "conv_19/BatchNorm/cond/Switch:1"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/pred_id"
+  op: "Identity"
+  input: "train_flag"
+  attr {
+    key: "T"
+    value {
+      type: DT_BOOL
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/Const"
+  op: "Const"
+  input: "^conv_19/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/Const_1"
+  op: "Const"
+  input: "^conv_19/BatchNorm/cond/switch_t"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm"
+  op: "FusedBatchNorm"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm/Switch:1"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm/Switch_1:1"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm/Switch_2:1"
+  input: "conv_19/BatchNorm/cond/Const"
+  input: "conv_19/BatchNorm/cond/Const_1"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm/Switch"
+  op: "Switch"
+  input: "conv_19/Add"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm/Switch_1"
+  op: "Switch"
+  input: "conv_19/BatchNorm/Const"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm/Switch_2"
+  op: "Switch"
+  input: "conv_19/BatchNorm/beta/read"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm_1"
+  op: "FusedBatchNorm"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "epsilon"
+    value {
+      f: 0.0010000000475
+    }
+  }
+  attr {
+    key: "is_training"
+    value {
+      b: false
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch"
+  op: "Switch"
+  input: "conv_19/Add"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/Add"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_1"
+  op: "Switch"
+  input: "conv_19/BatchNorm/Const"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/Const"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_2"
+  op: "Switch"
+  input: "conv_19/BatchNorm/beta/read"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/beta"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_3"
+  op: "Switch"
+  input: "conv_19/BatchNorm/moving_mean/read"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/moving_mean"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/FusedBatchNorm_1/Switch_4"
+  op: "Switch"
+  input: "conv_19/BatchNorm/moving_variance/read"
+  input: "conv_19/BatchNorm/cond/pred_id"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_19/BatchNorm/moving_variance"
+      }
+    }
+  }
+}
+node {
+  name: "conv_19/BatchNorm/cond/Merge"
+  op: "Merge"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm_1"
+  input: "conv_19/BatchNorm/cond/FusedBatchNorm"
+  attr {
+    key: "N"
+    value {
+      i: 2
+    }
+  }
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_19/Relu"
+  op: "Relu"
+  input: "conv_19/BatchNorm/cond/Merge"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv_20/conv_20_conv_weights"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 1
+          }
+          dim {
+            size: 1
+          }
+          dim {
+            size: 64
+          }
+          dim {
+            size: 18
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_20/conv_20_conv_weights/read"
+  op: "Identity"
+  input: "conv_20/conv_20_conv_weights"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_20/conv_20_conv_weights"
+      }
+    }
+  }
+}
+node {
+  name: "conv_20/Conv2D"
+  op: "Conv2D"
+  input: "conv_19/Relu"
+  input: "conv_20/conv_20_conv_weights/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "conv_20/biases"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 18
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv_20/biases/read"
+  op: "Identity"
+  input: "conv_20/biases"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@conv_20/biases"
+      }
+    }
+  }
+}
+node {
+  name: "conv_20/Add"
+  op: "Add"
+  input: "conv_20/Conv2D"
+  input: "conv_20/biases/read"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "Variable"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_FLOAT
+        tensor_shape {
+          dim {
+            size: 3
+          }
+          dim {
+            size: 3
+          }
+          dim {
+            size: 18
+          }
+          dim {
+            size: 18
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "Variable/read"
+  op: "Identity"
+  input: "Variable"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "_class"
+    value {
+      list {
+        s: "loc:@Variable"
+      }
+    }
+  }
+}
+node {
+  name: "deconv_input"
+  op: "Identity"
+  input: "conv_14/Add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "conv2d_transpose/output_shape"
+  op: "Const"
+  attr {
+    key: "dtype"
+    value {
+      type: DT_INT32
+    }
+  }
+  attr {
+    key: "value"
+    value {
+      tensor {
+        dtype: DT_INT32
+        tensor_shape {
+          dim {
+            size: 4
+          }
+        }
+      }
+    }
+  }
+}
+node {
+  name: "conv2d_transpose"
+  op: "Conv2DBackpropInput"
+  input: "conv2d_transpose/output_shape"
+  input: "Variable/read"
+  input: "deconv_input"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+  attr {
+    key: "data_format"
+    value {
+      s: "NHWC"
+    }
+  }
+  attr {
+    key: "dilations"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "padding"
+    value {
+      s: "SAME"
+    }
+  }
+  attr {
+    key: "strides"
+    value {
+      list {
+        i: 1
+        i: 1
+        i: 1
+        i: 1
+      }
+    }
+  }
+  attr {
+    key: "use_cudnn_on_gpu"
+    value {
+      b: true
+    }
+  }
+}
+node {
+  name: "deconv_output"
+  op: "Identity"
+  input: "conv2d_transpose"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "a"
+  op: "Identity"
+  input: "deconv_output"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "b"
+  op: "Identity"
+  input: "conv_17/Add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+node {
+  name: "c"
+  op: "Identity"
+  input: "conv_20/Add"
+  attr {
+    key: "T"
+    value {
+      type: DT_FLOAT
+    }
+  }
+}
+library {
+}
